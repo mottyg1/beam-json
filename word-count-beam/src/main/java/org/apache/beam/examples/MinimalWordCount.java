@@ -36,7 +36,7 @@ import org.apache.beam.sdk.values.KV;
  * <p>This class, {@link MinimalWordCount}, is the first in a series of four successively more
  * detailed 'word count' examples. Here, for simplicity, we don't show any error-checking or
  * argument processing, and focus on construction of the pipeline, which chains together the
- * application of core transforms.
+ * application of jsot.mutate.jsot.core transforms.
  *
  * <p>Next, see the {@link WordCount} pipeline, then the {@link DebuggingWordCount}, and finally the
  * {@link WindowedWordCount} pipeline, for more detailed examples that introduce additional

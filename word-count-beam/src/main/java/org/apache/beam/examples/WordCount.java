@@ -119,6 +119,14 @@ public class WordCount {
     }
   }
 
+    public static class StdoutPrintFn extends SimpleFunction<String, String> {
+        @Override
+        public String apply(String input) {
+            System.out.println(input);
+            return input;
+        }
+    }
+
   /**
    * A PTransform that converts a PCollection containing lines of text into a PCollection of
    * formatted word counts.
@@ -127,8 +135,7 @@ public class WordCount {
    * Count) as a reusable PTransform subclass. Using composite transforms allows for easy reuse,
    * modular testing, and an improved monitoring experience.
    */
-  public static class CountWords extends PTransform<PCollection<String>,
-      PCollection<KV<String, Long>>> {
+  public static class CountWords extends PTransform<PCollection<String>, PCollection<KV<String, Long>>> {
     @Override
     public PCollection<KV<String, Long>> expand(PCollection<String> lines) {
 
@@ -168,7 +175,7 @@ public class WordCount {
      * Set this required option to specify where to write the output.
      */
     @Description("Path of the file to write to")
-    @Required
+//    @Required
     String getOutput();
     void setOutput(String value);
   }
@@ -183,7 +190,9 @@ public class WordCount {
     p.apply("ReadLines", TextIO.read().from(options.getInputFile()))
      .apply(new CountWords())
      .apply(MapElements.via(new FormatAsTextFn()))
-     .apply("WriteCounts", TextIO.write().to(options.getOutput()));
+//     .apply("WriteCounts", TextIO.write().to(options.getOutput()))
+    .apply(MapElements.via(new StdoutPrintFn()))
+   ;
 
     p.run().waitUntilFinish();
   }
